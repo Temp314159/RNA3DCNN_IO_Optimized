@@ -1,0 +1,56 @@
+* This file does not follow the MarkDown syntax specification and can be read directly in text format.
+
+——————————————————————————————————————————————
+
+文件目录 File Path:
+数据文件 MD PDB Data:
+/home/yourfolder/data/FilteredDataset
+/home/yourfolder/data/MDPDB
+
+训练程序 Train Model:
+/home/yourfolder/RNA3DCNN_New/TrainModel
+
+网格化程序 Voxelizate Program (Nucleotide Calculation):
+/home/yourfolder/RNA3DCNN_New/Voxelizate
+
+——————————————————————————————————————————————
+
+Makefile:
+/home/yourfolder/RNA3DCNN_New/Voxelizate/Makefile
+If you don't know how to use it, google "makefile".
+
+ExtractList:
+The list extract program.
+It will calculate nucleotides which need to be voxelizated and number them, then write their number, their RNA, their position in the RNA, and their unfitness score into a list.
+Run it before training, or uncomment corresponding lines in RNA3DCNN_New.py to automatically run it every time when you train the net.
+
+Voxelizate:
+The voxelizate program.
+It will voxelizate nucleotides and output the data.
+Train program will call it when generating training data.
+
+RNA3DCNN_New:
+The train program.
+
+——————————————————————————————————————————————
+
+程序编译：
+使用 /home/yourfolder/RNA3DCNN_New/Voxelizate/Makefile 编译 ExtractList 与 Voxelizate 程序，具体见 Makefile 内代码。
+
+pdb文件指定：
+将需要作为训练数据的pdb文件写到一个列表里。参考/home/yourfolder/list里的例子，其中tpdblist/vpdblist分别代表训练集/验证集要用到的pdb文件。
+
+ExtractList程序：
+主程序代码：/home/yourfolder/RNA3DCNN_New/Voxelizate/ExtractList.cpp
+在训练前，该程序负责把pdblist里的所有pdb内的所有核苷酸过一遍，给需要网格化的核苷酸编号，记录它们的位置和unfitness score。数据会输出到tdatalist或vdatalist文件里。
+可以在训练前手动运行，或在RNA3DCNN_New.py里取消注释，自动运行。
+
+Voxelizate程序：
+主程序代码：/home/yourfolder/RNA3DCNN_New/Voxelizate/Voxelizate.cpp
+该程序根据ExtractList输出的列表，网格化核苷酸，并输出网格的非零RGB值。
+RNA3DCNN_New.py在生成数据的时候会自动调用该程序。
+
+训练程序：
+/home/yourfolder/RNA3DCNN_New/TrainModel/RNA3DCNN_New.py
+
+查看代码，有更详细的注释。
